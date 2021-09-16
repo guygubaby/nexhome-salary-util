@@ -8,7 +8,7 @@ import styleImport from 'vite-plugin-style-import'
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
-  base: '/starnet-salary/',
+  // base: '/starnet-salary/',
   resolve: {
     alias: {
       '@/': `${path.resolve(__dirname, 'src')}/`,
