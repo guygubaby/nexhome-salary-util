@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="/favicon.ico" type="image/ico">
+  <link rel="apple-touch-icon" href="/pwa-192x192.png">
+  <meta name="theme-color" content="#ffffff">
+  <title>Nexhome工资查询小工具</title>
+  <script src="./static/js/Base64.min.js" async></script>
+  <script src="./static/js/RSA.min.js" async></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    ;(function () {
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      const setting = localStorage.getItem('color-schema') || 'auto'
+      if (setting === 'dark' || (prefersDark && setting !== 'light'))
+        document.documentElement.classList.toggle('dark', true)
+    })()
+  </script>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

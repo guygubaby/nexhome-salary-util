@@ -1,0 +1,36 @@
+@import "./vars.scss";
+@import "./scrollbar.scss";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+html {
+  color: var(--color-balck-500);
+  background-color: var(--color-white-500);
+}
+
+html.dark {
+  color: var(--color-white-500);
+  background-color: var(--color-black-500);
+  --van-cell-background-color: #242635;
+  --van-cell-group-background-color: #242635;
+  --van-cell-text-color: #f5f5f7;
+  --van-field-input-text-color: #f5f5f7;
+  --van-cell-border-color: #242635;
+  --van-button-primary-border-color: rgba(139, 92, 246, 1);
+  --van-field-label-color: var(--van-gray-5);
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

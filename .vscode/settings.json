@@ -1,0 +1,18 @@
+{
+  "eslint.format.enable": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "prettier.enable": true,
+  "eslint.packageManager": "pnpm",
+  "cSpell.words": ["nexhome"],
+  "volar.tsPlugin": true,
+  "volar.tsPluginStatus": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+  },
+  "files.associations": {
+    "*.css": "postcss",
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  }
+}
