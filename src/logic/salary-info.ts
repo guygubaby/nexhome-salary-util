@@ -1,3 +1,6 @@
+import { sleep } from '@bryce-loskie/utils'
+import { Toast } from 'vant'
+
 import { parseHtmlStr } from '../utils/getContentFromHtmlStr'
 
 import http from '@/utils/http'
@@ -24,32 +27,18 @@ export interface SalaryPayload {
   btnSelectY: string
 }
 
-const getHtmlStringWithPayload = async (payload: SalaryPayload): Promise<string> => {
-  const { txtstartym, txtendym, btnSelectX, btnSelectY } = payload
-  const url = '/HR/Ess/MyPay.aspx'
-
-  const __VIEWSTATE = sessionStorage.getItem('__VIEWSTATE') || ''
-
-  const formData = new FormData()
-
-  formData.append('txtstartym', txtstartym)
-  formData.append('txtendym', txtendym)
-  formData.append('btnSelect.x', btnSelectX)
-  formData.append('btnSelect.y', btnSelectY)
-  formData.append('__VIEWSTATE', __VIEWSTATE)
-
-  const res = await http.post(url, formData)
-
-  const html = res.data
-  return html
-}
-
 const parseSalaryHtml = (html: string): Item[] => {
   const doc = parseHtmlStr(html)
 
   const head = doc.querySelector('tr.gridtou')!
   const keys = Array.from(head.querySelectorAll('td')).map((td) => td.textContent || '')
-  const item = doc.querySelector('tr.gridItem')!
+  const realPayInfo = doc.querySelector('tr.gridItem')!
+  if (!realPayInfo) {
+    sleep(1.6 * 1000, () => {
+      Toast.fail('当月明细还未统计，请10号以后进行查询 ~')
+    })
+  }
+  const item = realPayInfo || doc.querySelector('tr.gridfooter')!
   const values = Array.from(item.querySelectorAll('td')).map((td) => td.textContent || '')
 
   return keys.reduce((acc, cur, index) => {
@@ -62,10 +51,8 @@ const parseSalaryHtml = (html: string): Item[] => {
   }, [] as Item[])
 }
 
-export const getSalaryInfo = async (payload?: SalaryPayload): Promise<Item[]> => {
-  const action = payload ? getHtmlStringWithPayload : getHtmlString
-
-  const html = await action(payload!)
+export const getSalaryInfo = async (): Promise<Item[]> => {
+  const html = await getHtmlString()
 
   return parseSalaryHtml(html)
 }
