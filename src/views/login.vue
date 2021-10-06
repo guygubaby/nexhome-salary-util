@@ -35,7 +35,7 @@ import { Button, Form, Field, CellGroup, Toast } from 'vant'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { login } from '@/logic/login'
+import { loginv2 } from '@/logic-v2/login'
 
 const router = useRouter()
 
@@ -49,16 +49,13 @@ const onSubmit = (values: any) => {
 
   Toast.loading('Login ...')
 
-  login({
+  loginv2({
     username,
     password,
     platform: '3',
   })
-    .then((res) => {
+    .then(() => {
       Toast.success('Login success')
-      const { userInfo, salary } = res
-      sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
-      sessionStorage.setItem('salary', JSON.stringify(salary))
       router.push({
         name: 'detail',
       })

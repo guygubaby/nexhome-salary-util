@@ -2,12 +2,12 @@ import type { RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/starnet-salary/',
     name: 'login',
     component: () => import('@/views/login.vue'),
   },
   {
-    path: '/detail',
+    path: '/starnet-salary/detail',
     name: 'detail',
     component: () => import('@/views/detail.vue'),
   },

@@ -19,6 +19,7 @@
     "mitt": "^3.0.0",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.0-rc.6",
+    "pinia-persist-plugin": "^0.1.1",
     "vant": "^3.2.3",
     "vh-check": "^2.0.5",
     "vue": "^3.2.2",

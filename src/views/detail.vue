@@ -1,10 +1,25 @@
 <template>
   <div class="p-4">
     <div class="text-center py-4">
-      <p class="text-2xl pb-2 text-purple-600 font-bold">Welcome back !</p>
-      <p v-if="userInfo" class="text-lg text-purple-500">
+      <p class="text-2xl pb-2 text-purple-600 font-bold">明细</p>
+
+      <p v-if="userInfo" class="text-lg text-purple-500 mb-4">
         {{ userInfo?.name }} - {{ userInfo?.code }} - {{ userInfo?.dep }}
       </p>
+
+      <Cell is-link class="month-cell rounded-lg" title="选择月份" :value="currentMonth" @click="show = true" />
+
+      <Popup v-model:show="show" position="bottom" round>
+        <DatetimePicker
+          v-model="currentDate"
+          type="year-month"
+          title=""
+          :min-date="minDate"
+          :max-date="maxDate"
+          @confirm="handleConfirm"
+          @cancel="show = false"
+        />
+      </Popup>
     </div>
 
     <div class="rounded-lg overflow-hidden shadow-sm shadow-light-50">
@@ -14,34 +29,44 @@
 </template>
 
 <script lang="ts" setup>
-import { Toast, Cell } from 'vant'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { Toast, Cell, DatetimePicker, Popup } from 'vant'
+import { onBeforeUnmount, ref } from 'vue'
 
-import { Item } from '@/logic/salary-info'
-import { LoginedUser } from '@/logic/user-info'
+import { getSalaryByMonth } from '@/logic-v2/salary'
+import { useAppStore } from '@/store/modules/app'
 
-onBeforeUnmount(() => {
-  sessionStorage.clear()
-})
+const appStore = useAppStore()
+const { userDetail: userInfo, salary, viewState, currentMonth } = storeToRefs(appStore)
 
-const getItem = (key: string) => {
+const show = ref(false)
+const currentDate = ref(new Date())
+
+const minDate = new Date(new Date().getFullYear() - 3, 0, 1)
+const maxDate = new Date(new Date().setMonth(new Date().getMonth() - 1))
+
+const handleConfirm = async () => {
   try {
-    const res = sessionStorage.getItem(key)
-    return JSON.parse(res || '')
-  } catch (error) {
-    Toast.fail((error as any).message)
+    Toast.loading('加载中...')
+    show.value = false
+
+    const [_salary, _viewState] = await getSalaryByMonth(viewState.value!, currentDate.value.getTime())
+    appStore.setSalary(_salary)
+    appStore.setViewState(_viewState)
+  } finally {
+    Toast.clear(true)
   }
 }
 
-const userInfo = ref<LoginedUser | null>(null)
-const salary = ref<Item[]>([])
-
-const init = () => {
-  const _userInfo = getItem('userInfo') as LoginedUser
-  const _salary = getItem('salary') as Item[]
-  userInfo.value = _userInfo
-  salary.value = _salary
-}
-
-onMounted(init)
+onBeforeUnmount(() => {
+  appStore.setSalary([])
+})
 </script>
+
+<style lang="scss" scoped>
+::v-deep(.month-cell) {
+  .van-cell__title {
+    text-align: left !important;
+  }
+}
+</style>

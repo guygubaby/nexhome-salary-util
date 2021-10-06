@@ -21,3 +21,5 @@ interface Window {
   encryptedString: (key: RSAKeyPair, s: string) => string
   setMaxDigits: (number: number) => void
 }
+
+type Nullable<T> = T | null
