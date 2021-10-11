@@ -1,13 +1,17 @@
 <template>
   <div class="p-4">
     <div class="text-center py-4">
-      <p class="text-2xl pb-2 text-purple-600 font-bold">明细</p>
-
-      <p v-if="userInfo" class="text-lg text-purple-500 mb-4">
+      <p v-if="userInfo" class="text text-lg font-medium my-4">
         {{ userInfo?.name }} - {{ userInfo?.code }} - {{ userInfo?.dep }}
       </p>
 
-      <Cell is-link class="month-cell rounded-lg" title="选择月份" :value="currentMonth" @click="show = true" />
+      <Cell
+        is-link
+        class="month-cell rounded-lg mb-4 btn"
+        title="选择月份"
+        :value="currentMonth"
+        @click="show = true"
+      />
 
       <Popup v-model:show="show" position="bottom" round>
         <DatetimePicker
@@ -66,7 +70,16 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 ::v-deep(.month-cell) {
   .van-cell__title {
+    @apply text-[#FAFBFF];
     text-align: left !important;
+  }
+
+  .van-cell__value {
+    @apply text-[#FAFBFF];
+  }
+
+  .van-cell__right-icon {
+    @apply text-[#FAFBFF];
   }
 }
 </style>

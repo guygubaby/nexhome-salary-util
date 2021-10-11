@@ -1,0 +1,17 @@
+.btn {
+  background: linear-gradient(90deg, #4c8df3, #7bc4f5) !important; 
+}
+
+.dark .btn {
+  background: linear-gradient(90deg, #8469C9, #7188C4, #67A7C2) !important;
+}
+
+.text {
+  background: linear-gradient(90deg, #151c2b, #8795b6);
+  @apply bg-clip-text text-transparent;
+}
+
+.dark .text {
+  background: linear-gradient(90deg, #9c84da, #7188C4, #67A7C2);
+  @apply bg-clip-text text-transparent;
+}

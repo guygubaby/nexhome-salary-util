@@ -1,7 +1,7 @@
 <template>
   <div class="h-8/10">
     <div class="text-center pb-14 pt-8vh">
-      <h1 class="text-2xl">Nexhome工资查询小工具</h1>
+      <h1 class="text-2xl text font-medium">Nexhome工资查询小工具</h1>
     </div>
 
     <Form @submit="onSubmit">
@@ -10,7 +10,7 @@
           v-model="form.username"
           name="username"
           label="用户名"
-          placeholder="用户名"
+          placeholder="请输入用户名"
           :rules="[{ required: true, message: '请输入用户名' }]"
         />
         <Field
@@ -18,13 +18,13 @@
           type="password"
           name="password"
           label="密码"
-          placeholder="密码"
+          placeholder="请输入密码"
           :rules="[{ required: true, message: '请输入密码' }]"
         />
       </CellGroup>
 
       <div class="mx-4 pt-25vh">
-        <Button class="dark:bg-purple-500" round block type="primary" native-type="submit">登录</Button>
+        <Button class="btn" round block type="primary" native-type="submit">登录</Button>
       </div>
     </Form>
   </div>
