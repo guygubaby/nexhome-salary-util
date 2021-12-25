@@ -7,22 +7,14 @@ import router from './router/index'
 
 import { store } from '@/store/index'
 
-import 'virtual:windi-base.css'
-// import 'virtual:windi-components.css'
-import 'virtual:windi-utilities.css'
+import 'windi.css'
 import './styles/main.scss'
 
 const head = createHead()
 
 const app = createApp(App)
 
-vhCheck({
-  cssVarName: 'vh-offset',
-  force: false,
-  bind: true,
-  redefineVh: false,
-  updateOnTouch: false,
-})
+vhCheck('vh-offset')
 
 app.use(store)
 app.use(head)
